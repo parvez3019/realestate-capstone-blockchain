@@ -30,8 +30,7 @@ test
 ```
 
 ### Result
-- SolnSquareVerifier - https://rinkeby.etherscan.io/address/
-0xf7BbbD43b259c002271F21C1Fb00DFA60E2a57F0
+- SolnSquareVerifier - https://rinkeby.etherscan.io/address/0xf7BbbD43b259c002271F21C1Fb00DFA60E2a57F0
 
 - Verifier - https://rinkeby.etherscan.io/address/0xF392A2B8768A0006EC2B656ad0B77487B917EE92
 
