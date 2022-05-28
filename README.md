@@ -37,7 +37,8 @@ test
 - Migrations - https://rinkeby.etherscan.io/address/0xff7758BBc531de63b49AA29A949acFeDeF3F65C2
 
 - Contract ABI - contract-abi.json
-- Market Place -
+
+- Open Sea - https://testnets.opensea.io/ParvezHassan
 
 
 # Project Resources

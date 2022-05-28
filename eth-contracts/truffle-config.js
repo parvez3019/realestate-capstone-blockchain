@@ -19,7 +19,7 @@
  */
 
 const HDWalletProvider = require('truffle-hdwallet-provider');
-const infuraKey = "";
+const infuraKey = "561c8a1f3a89408482f803ab35c995db";
 
 const fs = require('fs');
 const mnemonic = "";
@@ -50,11 +50,7 @@ module.exports = {
 
         rinkeby: {
             provider: () => new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/v3/${infuraKey}`),
-            network_id: 4,
-            gas: 5500000,
-            confirmations: 2,
-            timeoutBlocks: 200,
-            skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+            network_id: '4',
         },
 
         // Another network with more advanced options...
