@@ -1,57 +1,62 @@
 pragma solidity >=0.4.21 <0.6.0;
 
-// define a contract call to the zokrates generated solidity contract <Verifier> or <renamedVerifier>
 import "./ERC721Mintable.sol";
 import "./verifier.sol";
 
-
-// define another contract named SolnSquareVerifier that inherits from your ERC721Mintable class
 contract SolnSquareVerifier is Verifier, GRToken {
-
-    // define a solutions struct that can hold an index & an address
     struct Solution {
-        bool added;
+        bool isAdded;
         bytes32 index;
-        address user;
-        uint256 tokenId;
+        address userAddr;
+        uint256 token_id;
     }
 
-    // define an array of the above struct
-    mapping(uint256 => Solution) solutions;
+    mapping(uint256 => Solution) solutionsMap;
 
-    // define a mapping to store unique solutions submitted
-    mapping(bytes32 => bool) private existSolution;
+    mapping(bytes32 => bool) private existSolutionMap;
 
-    // Create an event to emit when a solution is added
-    event SolutionAdded(bytes32 key, address user, uint256 tokenId);
+    event SolutionAdded(bytes32 key, address userAddr, uint256 token_id);
 
-    //  Create a function to add the solutions to the array and emit the event
-    //  This will just limit the ability for a user to mint a token unless they have actually verified that they own that token
-    function addSolution(address user, uint256 tokenId, uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[2] memory input) public {
-        // Create unique key for the arguments
-        bytes32 key = generateKey(a, b, c, input);
+    function addSolution(
+        address userAddr,
+        uint256 token_id,
+        uint256[2] memory a,
+        uint256[2][2] memory b,
+        uint256[2] memory c,
+        uint256[2] memory input
+    ) public {
+        bytes32 generatedKey = generateKey(a, b, c, input);
 
-        // Check whether the solution is already used
-        require(!existSolution[key], "Solution already exists");
+        require(!existSolutionMap[generatedKey], "solution_already_exists");
 
-        // Verification to check if a token is valid using zokrates (verifier.sol)
-        bool isValidProof = verifyTx(a, b, c, input);
-        require(isValidProof, "Invalid proof");
+        bool isProofValid = verifyTx(a, b, c, input);
 
-        // Add solutions mappings and set existSolution to be true
-        Solution memory solution = Solution({added : true, index : key, user : user, tokenId : tokenId});
-        solutions[tokenId] = solution;
-        existSolution[key] = true;
-        emit SolutionAdded(key, user, tokenId);
+        require(isProofValid, "invalid_proof");
+
+        Solution memory solution = Solution({
+            isAdded: true,
+            index: generatedKey,
+            userAddr: userAddr,
+            token_id: token_id
+        });
+
+        solutionsMap[token_id] = solution;
+
+        existSolutionMap[generatedKey] = true;
+
+        emit SolutionAdded(generatedKey, userAddr, token_id);
     }
 
-    function generateKey(uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[2] memory inputs) view internal returns (bytes32) {
+    function generateKey(
+        uint256[2] memory a,
+        uint256[2][2] memory b,
+        uint256[2] memory c,
+        uint256[2] memory inputs
+    ) internal view returns (bytes32) {
         return keccak256(abi.encodePacked(a, b, c, inputs));
     }
 
-    //  - make sure the solution is unique (has not been used before)
-    //  - make sure you handle metadata as well as tokenSupply
-    function mint(address to, uint256 tokenId) public returns (bool){
-        return super.mint(to, tokenId);
+    function mint(address to, uint256 token_id) public returns (bool) {
+        return super.mint(to, token_id);
     }
 }
