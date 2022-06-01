@@ -42,6 +42,10 @@ test
     - https://testnets.opensea.io/ParvezHassan
     - https://testnets.opensea.io/assets/rinkeby/0x4b3e857a0c809b995e31409d28f180b45ca2defa/1
 
+- Transaction (Buying asset) - https://rinkeby.etherscan.io/tx/0x2463c3eb20eedee3cbbff2edea554f54265a1023e73e61f5b1975906a3341a5c
+
+
+
 
 # Project Resources
 
