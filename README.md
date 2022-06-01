@@ -30,19 +30,18 @@ test
 ```
 
 ### Result
-- SolnSquareVerifier - https://rinkeby.etherscan.io/address/0x4b3e857A0C809b995E31409d28f180b45CA2defa
+- SolnSquareVerifier - https://rinkeby.etherscan.io/address/0x4CC79f2d7c39A7D473633092a28E9d3eEe0d45F4
 
-- Verifier - https://rinkeby.etherscan.io/address/0xeF7cB8fB65F18fd99d3f82aF0186b2AaC77e54BF
+- Verifier - https://rinkeby.etherscan.io/address/0x905A0284FB7139626E0fEB5E2DFb25434d411a4D
 
-- Migrations - https://rinkeby.etherscan.io/address/0x91cB1116C7FD060bE341AceeB8feF007372F0d0c
+- Migrations - https://rinkeby.etherscan.io/address/0x4D88DAA3be18C51bd86f2D97Ffd979346424267b
 
 - Contract ABI - contract-abi.json
 
 - Open Sea 
-    - https://testnets.opensea.io/ParvezHassan
-    - https://testnets.opensea.io/assets/rinkeby/0x4b3e857a0c809b995e31409d28f180b45ca2defa/1
+    - https://testnets.opensea.io/assets/rinkeby/0x4cc79f2d7c39a7d473633092a28e9d3eee0d45f4/2
 
-- Transaction (Buying asset) - https://rinkeby.etherscan.io/tx/0x2463c3eb20eedee3cbbff2edea554f54265a1023e73e61f5b1975906a3341a5c
+- Transaction (Buying asset) - https://rinkeby.etherscan.io/tx/0xeab3e3f120e4d1efdd6b7e48108c5bcea9163c3ccf291408a5ef29b938e15004
 
 
 
