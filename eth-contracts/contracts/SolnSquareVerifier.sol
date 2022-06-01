@@ -52,7 +52,6 @@ contract SolnSquareVerifier is Verifier, GRToken {
     //  - make sure the solution is unique (has not been used before)
     //  - make sure you handle metadata as well as tokenSupply
     function mint(address to, uint256 tokenId) public returns (bool){
-        require(solutions[tokenId].added, "Solution already exists");
         return super.mint(to, tokenId);
     }
 }

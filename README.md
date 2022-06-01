@@ -30,15 +30,17 @@ test
 ```
 
 ### Result
-- SolnSquareVerifier - https://rinkeby.etherscan.io/address/0xf7BbbD43b259c002271F21C1Fb00DFA60E2a57F0
+- SolnSquareVerifier - https://rinkeby.etherscan.io/address/0x4b3e857A0C809b995E31409d28f180b45CA2defa
 
-- Verifier - https://rinkeby.etherscan.io/address/0xF392A2B8768A0006EC2B656ad0B77487B917EE92
+- Verifier - https://rinkeby.etherscan.io/address/0xeF7cB8fB65F18fd99d3f82aF0186b2AaC77e54BF
 
-- Migrations - https://rinkeby.etherscan.io/address/0xff7758BBc531de63b49AA29A949acFeDeF3F65C2
+- Migrations - https://rinkeby.etherscan.io/address/0x91cB1116C7FD060bE341AceeB8feF007372F0d0c
 
 - Contract ABI - contract-abi.json
 
-- Open Sea - https://testnets.opensea.io/ParvezHassan
+- Open Sea 
+    - https://testnets.opensea.io/ParvezHassan
+    - https://testnets.opensea.io/assets/rinkeby/0x4b3e857a0c809b995e31409d28f180b45ca2defa/1
 
 
 # Project Resources
