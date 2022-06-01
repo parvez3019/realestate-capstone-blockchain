@@ -12,9 +12,8 @@ contract SolnSquareVerifier is Verifier, GRToken {
     }
 
     mapping(uint256 => Solution) solutionsMap;
-
     mapping(bytes32 => bool) private existSolutionMap;
-
+    
     event SolutionAdded(bytes32 key, address userAddr, uint256 token_id);
 
     function addSolution(
@@ -26,24 +25,19 @@ contract SolnSquareVerifier is Verifier, GRToken {
         uint256[2] memory input
     ) public {
         bytes32 generatedKey = generateKey(a, b, c, input);
-
         require(!existSolutionMap[generatedKey], "solution_already_exists");
-
         bool isProofValid = verifyTx(a, b, c, input);
-
         require(isProofValid, "invalid_proof");
 
-        Solution memory solution = Solution({
+        Solution memory solutionObj = Solution({
             isAdded: true,
             index: generatedKey,
             userAddr: userAddr,
             token_id: token_id
         });
 
-        solutionsMap[token_id] = solution;
-
+        solutionsMap[token_id] = solutionObj;
         existSolutionMap[generatedKey] = true;
-
         emit SolutionAdded(generatedKey, userAddr, token_id);
     }
 

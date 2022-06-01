@@ -1,71 +1,71 @@
 var ERC721MintableComplete = artifacts.require('GRToken');
 
 contract('TestERC721Mintable', accounts => {
-
-    const account1 = accounts[0];
-    const account2 = accounts[1];
-    const account3 = accounts[2];
-    const account4 = accounts[3];
+    const account1Address = accounts[0];
+    const account2Address = accounts[1];
+    const account3Address = accounts[2];
+    const account4Address = accounts[3];
 
     describe('match erc721 spec', function () {
         beforeEach(async function () {
-            this.contract = await ERC721MintableComplete.new({from: account1});
+            this.contract = await ERC721MintableComplete.new({from: account1Address});
 
-            // mint multiple tokens
-            await this.contract.mint(account1, 1, {from: account1});
-            await this.contract.mint(account2, 2, {from: account1});
-            await this.contract.mint(account3, 3, {from: account1});
-            await this.contract.mint(account4, 4, {from: account1});
+            await this.contract.mint(account1Address, 1, {from: account1Address});
+            await this.contract.mint(account2Address, 2, {from: account1Address});
+            await this.contract.mint(account3Address, 3, {from: account1Address});
+            await this.contract.mint(account4Address, 4, {from: account1Address});
         });
 
         it('should return total supply', async function () {
             let totalSupply = await this.contract.totalSupply.call();
-            assert.equal(totalSupply, 4, "Incorrect total supply");
+            
+            assert.equal(totalSupply, 4, "incorrect_total_supply");
         });
 
         it('should get token balance', async function () {
-            let balance = await this.contract.balanceOf.call(account1);
+            let actual_balance = await this.contract.balanceOf.call(account1Address);
 
-            assert.equal(balance.toNumber(), 1, "Invalid token balance");
+            assert.equal(actual_balance.toNumber(), 1, "invalid_token_balance");
         });
 
-        // token uri should be complete i.e: https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/1
         it('should return token uri', async function () {
             let tokenURI = await this.contract.tokenURI.call(1);
 
             assert.equal(
                 tokenURI, "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/1",
-                "Invalid token URI"
+                "invalid_token_uri"
             );
         });
 
         it('should transfer token from one owner to another', async function () {
-            await this.contract.transferFrom(account1, account4, 1);
-            let owner = await this.contract.ownerOf.call(1);
-            assert.equal(owner, account4, "Token wasn't transferred");
+            await this.contract.transferFrom(account1Address, account4Address, 1);
+           
+            let ownerAddr = await this.contract.ownerOf.call(1);
+           
+            assert.equal(ownerAddr, account4Address, "token_wasnt_transferred");
         });
     });
 
     describe('have ownership properties', function () {
         beforeEach(async function () {
-            this.contract = await ERC721MintableComplete.new({from: account1});
+            this.contract = await ERC721MintableComplete.new({from: account1Address});
         })
 
         it('should fail when minting when address is not contract owner', async function () {
-            let failed = false;
+            let isFailed = false;
             try {
-                await this.contract.mint(account4, 5, {from: account2});
+                await this.contract.mint(account4Address, 5, {from: account2Address});
             } catch (e) {
-                failed = true;
+                isFailed = true;
             }
 
-            assert.equal(failed, true, "Other addresses can mint");
+            assert.equal(isFailed, true, "other_addresses_can_mint");
         });
 
         it('should return contract owner', async function () {
-            let owner = await this.contract.owner.call({from: account1});
+            let ownerAddr = await this.contract.owner.call({from: account1Address});
 
-            assert.equal(owner, account1, "Could not get contract owner");
+            assert.equal(ownerAddr, account1Address, "could_not_get_contract_owner");
         });
 
     });

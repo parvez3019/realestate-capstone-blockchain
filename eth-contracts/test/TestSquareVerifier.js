@@ -2,28 +2,26 @@
 var SquareVerifier = artifacts.require('Verifier');
 
 contract('SquareVerifier', accounts => {
-    const account1 = accounts[0];
-    // - use the contents from proof.json generated from zokrates steps
-    const proof = require("./proof.json");
+    const account1Address = accounts[0];
+    const zProof = require("./proof.json");
 
     beforeEach(async function () {
-        this.contract = await SquareVerifier.new({from: account1});
+        this.contract = await SquareVerifier.new({ from: account1Address });
     });
 
-    // Test verification with correct proof
     it('Test verification with correct proof', async function () {
-
-        const {proof: {a, b, c}, inputs: inputs} = proof;
+        const { proof: { a, b, c }, inputs: inputs } = zProof;
 
         let result = await this.contract.verifyTx.call(a, b, c, inputs);
-        assert.equal(result, true, "Proof incorrect");
+
+        assert.equal(result, true, "proof_incorrect");
     });
 
-    // Test verification with incorrect proof
     it('Test verification with incorrect proof', async function () {
-        const {proof: {a, b, c}} = proof;
+        const { proof: { a, b, c } } = zProof;
 
         let result = await this.contract.verifyTx.call(a, b, c, [0, 0]);
-        assert.equal(result, false, "Proof should not be correct");
+
+        assert.equal(result, false, "proof_should_not_be_correct");
     });
 })

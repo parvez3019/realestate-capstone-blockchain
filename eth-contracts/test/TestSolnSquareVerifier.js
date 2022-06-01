@@ -3,55 +3,45 @@ const SquareVerifier = artifacts.require('Verifier');
 
 contract('SolnSquareVerifier', accounts => {
 
-    const account1 = accounts[0];
-    const account2 = accounts[1];
-    const proof = require('./proof.json');
+    const account1Address = accounts[0];
+    const account2Address = accounts[1];
+    const zProof = require('./proof.json');
 
     beforeEach(async function () {
-        this.verifier = await SquareVerifier.new({from: account1});
-        this.contract = await SolnSquareVerifier.new(this.verifier.address, {from: account1});
+        this.verifier = await SquareVerifier.new({from: account1Address});
+        this.contract = await SolnSquareVerifier.new(this.verifier.address, {from: account1Address});
     })
 
-    // Test if a new solution can be added for contract - SolnSquareVerifier
     it('Test if a new solution can be added for contract - SolnSquareVerifier', async function () {
-        const {proof: {a, b, c}, inputs: inputs} = proof;
-
-        // Declare and Initialize a variable for event
-        let eventEmitted = false;
-
-        // Watch the emitted event SolutionAdded()
+        const {proof: {a, b, c}, inputs: inputs} = zProof;
+        let isEventEmitted = false;
         this.contract.contract.once('SolutionAdded', {}, function () {
-            eventEmitted = true;
+            isEventEmitted = true;
         });
 
-        await this.contract.addSolution(account2, 1, a, b, c, inputs);
-
-        assert.equal(eventEmitted, true, 'No event emitted');
+        await this.contract.addSolution(account2Address, 1, a, b, c, inputs);
+        assert.equal(isEventEmitted, true, 'no_event_emitted');
     });
 
-    // Test if an ERC721 token can be minted for contract - SolnSquareVerifier
     it('Test if an ERC721 token can be minted for contract - SolnSquareVerifier', async function () {
-        const {proof: {a, b, c}, inputs: inputs} = proof;
+        const {proof: {a, b, c}, inputs: inputs} = zProof;
+        await this.contract.addSolution(account2Address, 1, a, b, c, inputs);
+        let supplyBeforeVal = await this.contract.totalSupply.call();
 
-        await this.contract.addSolution(account2, 1, a, b, c, inputs);
+        await this.contract.mint(account2Address, 1, {from: account1Address});
+        let supplyAfterVal = await this.contract.totalSupply.call();
 
-        let supplyBefore = await this.contract.totalSupply.call();
+        let differenceInSupplyVal = supplyAfterVal.toNumber() - supplyBeforeVal.toNumber();
 
-        await this.contract.mint(account2, 1, {from: account1});
+        assert.equal(differenceInSupplyVal, 1, "Invalid supply left");
 
-        let supplyAfter = await this.contract.totalSupply.call();
-
-        let difference = supplyAfter.toNumber() - supplyBefore.toNumber();
-
-        assert.equal(difference, 1, "Invalid supply left");
-
-        let failed = false;
+        let isFailed = false;
         try {
-            await this.contract.addSolution(account2, 1, a, b, c, inputs);
+            await this.contract.addSolution(account2Address, 1, a, b, c, inputs);
         } catch (e) {
-            failed = true;
+            isFailed = true;
         }
 
-        assert.equal(failed, true, "Reused solution");
+        assert.equal(isFailed, true, "reused_solution");
     })
 })
